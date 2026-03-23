@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ВАРТА НА СТІНІ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+
     <style>
+        @font-face {
+            font-family: 'GameOfThrones';
+            src: url('fonts/Game-of-Thrones.ttf') format('truetype'),
+                 url('fonts/Game-of-Thrones.woff2') format('woff2'),
+                 url('fonts/Game-of-Thrones.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
             overflow: hidden;
-            font-family: 'Cinzel', Georgia, serif;
+            font-family: 'GameOfThrones', Georgia, serif;
             color: white;
         }
 
@@ -28,7 +38,7 @@
 
         .container {
             position: relative;
-            z-index: 3;
+            z-index: 1;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -40,6 +50,7 @@
 
         .header {
             color: #d4af37;
+            font-family: 'GameOfThrones', Georgia, serif;
             font-size: clamp(2.2rem, 6vw, 4.5rem);
             font-weight: 900;
             text-shadow: 3px 3px 10px black;
@@ -48,6 +59,7 @@
 
         .oath {
             color: #e0e0e0;
+            font-family: 'GameOfThrones', Georgia, serif;
             font-size: clamp(1.8rem, 5.5vw, 4rem);
             line-height: 1.25;
             text-shadow: 2px 2px 12px black;
@@ -72,74 +84,6 @@
             text-shadow: 0 0 40px rgba(165, 242, 243, 0.6);
             line-height: 0.9;
         }
-
-        /* Сніг з сильним вітром */
-        .snow-container {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 2;
-            overflow: visible;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -30px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 8px rgba(255,255,255,0.95);
-            opacity: 0.9;
-            animation: fall linear infinite, wind 12s ease-in-out infinite alternate;
-            will-change: transform;
-        }
-
-        /* Різна швидкість падіння */
-        .snowflake:nth-child(odd)  { animation-duration: 20s, 10s; }
-        .snowflake:nth-child(even) { animation-duration: 26s, 14s; }
-
-        .snowflake:nth-child(3n)   { animation-duration: 18s, 9s; width: 4px; height: 4px; opacity: 0.75; }
-        .snowflake:nth-child(5n)   { animation-duration: 22s, 11s; width: 9px; height: 9px; opacity: 0.95; }
-        .snowflake:nth-child(7n)   { animation-duration: 24s, 13s; width: 6px; height: 6px; opacity: 0.85; }
-
-        /* Позиції та індивідуальні затримки */
-        .snowflake:nth-child(1)  { left: 6%;   animation-delay: -1s, -2s; }
-        .snowflake:nth-child(2)  { left: 13%;  animation-delay: -4s, -3s; }
-        .snowflake:nth-child(3)  { left: 21%;  animation-delay: -7s, -5s; }
-        .snowflake:nth-child(4)  { left: 28%;  animation-delay: -0.5s, -1s; }
-        .snowflake:nth-child(5)  { left: 34%;  animation-delay: -3s, -6s; width: 7px; height: 7px; }
-        .snowflake:nth-child(6)  { left: 40%;  animation-delay: -6s, -8s; }
-        .snowflake:nth-child(7)  { left: 47%;  animation-delay: -9s, -10s; width: 5px; height: 5px; }
-        .snowflake:nth-child(8)  { left: 53%;  animation-delay: -2s, -4s; }
-        .snowflake:nth-child(9)  { left: 60%;  animation-delay: -5s, -7s; width: 8px; height: 8px; }
-        .snowflake:nth-child(10) { left: 66%;  animation-delay: -8s, -11s; }
-        .snowflake:nth-child(11) { left: 73%;  animation-delay: -11s, -13s; }
-        .snowflake:nth-child(12) { left: 80%;  animation-delay: -0.2s, -0.5s; width: 6px; height: 6px; }
-        .snowflake:nth-child(13) { left: 86%;  animation-delay: -2.5s, -3.5s; }
-        .snowflake:nth-child(14) { left: 92%;  animation-delay: -5.5s, -6.5s; }
-        .snowflake:nth-child(15) { left: 3%;   animation-delay: -7s, -9s; width: 9px; height: 9px; }
-        .snowflake:nth-child(16) { left: 10%;  animation-delay: -10s, -12s; }
-        .snowflake:nth-child(17) { left: 18%;  animation-delay: -12s, -14s; }
-        .snowflake:nth-child(18) { left: 25%;  animation-delay: -1.2s, -2.2s; width: 5px; height: 5px; }
-        .snowflake:nth-child(19) { left: 32%;  animation-delay: -4.2s, -5.2s; }
-        .snowflake:nth-child(20) { left: 39%;  animation-delay: -7.2s, -8.2s; }
-        .snowflake:nth-child(21) { left: 46%;  animation-delay: -10.2s, -11.2s; width: 7px; height: 7px; }
-        .snowflake:nth-child(22) { left: 52%;  animation-delay: -13.2s, -14.2s; }
-        .snowflake:nth-child(23) { left: 59%;  animation-delay: -15s, -16s; }
-        .snowflake:nth-child(24) { left: 67%;  animation-delay: -1.8s, -2.8s; width: 6px; height: 6px; }
-        .snowflake:nth-child(25) { left: 75%;  animation-delay: -4.8s, -5.8s; }
-
-        @keyframes fall {
-            0%   { transform: translateY(-30vh) rotate(0deg); }
-            100% { transform: translateY(130vh) rotate(1440deg); }
-        }
-
-        @keyframes wind {
-            0%   { transform: translateX(-60px) rotate(-30deg); }
-            25%  { transform: translateX(30px) rotate(15deg); }
-            50%  { transform: translateX(-40px) rotate(-20deg); }
-            75%  { transform: translateX(50px) rotate(25deg); }
-            100% { transform: translateX(-55px) rotate(-35deg); }
-        }
     </style>
 </head>
 <body>
@@ -148,18 +92,6 @@
       <source media="(min-width: 901px)" srcset="backg.png">
       <img class="bg" src="back.png" alt="" loading="eager">
     </picture>
-
-    <div class="snow-container">
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div>
-      <div class="snowflake"></div>
-    </div>
 
     <div class="container">
         <div class="header">НІЧ ПОЧИНАЄТЬСЯ, І ПОЧИНАЄТЬСЯ МОЯ ВАРТА...</div>
