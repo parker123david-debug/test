@@ -32,38 +32,34 @@
             background-color: #0a0a1f;
         }
 
-        .bg-container {
+        #bg {
             position: fixed;
             inset: 0;
-            width: 100vw;
-            height: 100vh;
             z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1.8s ease;
+            opacity: 1;
         }
 
-        .bg {
-            position: absolute;
+        body.night #bg {
+            opacity: 0;
+        }
+
+        #bg-night {
+            position: fixed;
             inset: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            object-position: center;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
             transition: opacity 1.8s ease;
         }
 
-        .bg-day {
+        body.night #bg-night {
             opacity: 1;
-        }
-
-        body.night .bg-day {
-            opacity: 0;
-        }
-
-        body.night .bg-night {
-            opacity: 1;
-        }
-
-        .bg-night {
-            opacity: 0;
         }
 
         .container {
@@ -130,19 +126,8 @@
 </head>
 <body>
 
-    <div class="bg-container">
-        <!-- Денні фони -->
-        <picture class="bg bg-day">
-          <source media="(min-width: 901px)" srcset="backg.png">
-          <img src="back.png" alt="" loading="eager">
-        </picture>
-
-        <!-- Нічні фони -->
-        <picture class="bg bg-night">
-          <source media="(min-width: 901px)" srcset="backnight.png">
-          <img src="backgnight.png" alt="" loading="eager">
-        </picture>
-    </div>
+    <div id="bg" style="background-image: url('backg.png');"></div>
+    <div id="bg-night" style="background-image: url('backnight.png');"></div>
 
     <div class="container">
         <div class="header">ніч починається, і починається моя варта...</div>
@@ -182,7 +167,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Аудіо розблокування
+        // Аудіо
         const ambience = document.getElementById('ambience');
         const theme = document.getElementById('theme');
         let unlocked = false;
