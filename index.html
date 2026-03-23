@@ -68,6 +68,49 @@
             text-shadow: 0 0 40px rgba(165, 242, 243, 0.6);
             line-height: 0.9;
         }
+        /* Сніг */
+.snow-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none; /* щоб сніг не заважав клікам */
+  z-index: 10; /* над фоном, але під текстом — якщо треба нижче тексту, постав z-index: -1 або 1 */
+  overflow: hidden;
+}
+
+.snowflake {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  box-shadow: 0 0 5px rgba(255,255,255,0.8);
+  animation: fall linear infinite, sway 3s ease-in-out infinite alternate;
+}
+
+/* Індивідуальні затримки та швидкості для кожного сніжинки (nth-child) */
+.snowflake:nth-child(1)  { left: 10%; animation-duration: 12s, 4s; animation-delay: 0s, 0s; }
+.snowflake:nth-child(2)  { left: 20%; animation-duration: 15s, 5s; animation-delay: 2s, 1s; width: 8px; height: 8px; }
+.snowflake:nth-child(3)  { left: 30%; animation-duration: 10s, 3.5s; animation-delay: 4s, 0.5s; }
+.snowflake:nth-child(4)  { left: 40%; animation-duration: 14s, 6s; animation-delay: 1s, 2s; width: 12px; height: 12px; }
+.snowflake:nth-child(5)  { left: 50%; animation-duration: 11s, 4s; animation-delay: 3s, 1.5s; }
+.snowflake:nth-child(6)  { left: 60%; animation-duration: 13s, 5.5s; animation-delay: 0.5s, 3s; }
+.snowflake:nth-child(7)  { left: 70%; animation-duration: 16s, 4.5s; animation-delay: 5s, 0s; width: 9px; height: 9px; }
+.snowflake:nth-child(8)  { left: 80%; animation-duration: 9s, 3s; animation-delay: 6s, 2.5s; }
+.snowflake:nth-child(9)  { left: 90%; animation-duration: 12s, 5s; animation-delay: 1.5s, 4s; }
+.snowflake:nth-child(10) { left: 15%; animation-duration: 17s, 6s; animation-delay: 7s, 1s; }
+
+/* Анімація падіння вниз */
+@keyframes fall {
+  0%   { transform: translateY(-10vh); }
+  100% { transform: translateY(110vh); }
+}
+
+/* Легке хитання вбік (sway) */
+@keyframes sway {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
     </style>
 </head>
 <body>
