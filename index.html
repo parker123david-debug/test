@@ -88,6 +88,8 @@
             margin-top: 3vh;
             text-transform: uppercase;
             letter-spacing: 2px;
+            opacity: 1;
+            transition: opacity 1.5s ease;
         }
 
         .oath {
@@ -96,6 +98,8 @@
             font-size: clamp(1.8rem, 5.5vw, 4rem);
             line-height: 1.25;
             text-shadow: 2px 2px 12px black;
+            opacity: 0;
+            transition: opacity 1.5s ease;
         }
 
         .bottom-block {
@@ -167,7 +171,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Аудіо
+        // Аудіо розблокування
         const ambience = document.getElementById('ambience');
         const theme = document.getElementById('theme');
         let unlocked = false;
@@ -180,7 +184,7 @@
             theme.play().catch(() => {});
         }
 
-        // Перемикання теми
+        // Перемикання теми день/ніч
         const body = document.body;
         let isNight = localStorage.getItem('nightMode') === 'true';
 
@@ -193,6 +197,23 @@
             body.classList.toggle('night', isNight);
             localStorage.setItem('nightMode', isNight);
         }
+
+        // Анімація тексту: header → 3 секунди → oath → 4 секунди
+        const header = document.querySelector('.header');
+        const oath = document.querySelector('.oath');
+
+        // Початково header видимий, oath прихований
+        setTimeout(() => {
+            header.style.opacity = '0'; // зникає через 3 секунди
+        }, 3000);
+
+        setTimeout(() => {
+            oath.style.opacity = '1';   // з'являється через 3 секунди
+        }, 3000);
+
+        setTimeout(() => {
+            oath.style.opacity = '0';   // зникає через ще 4 секунди (всього 7 секунд)
+        }, 7000);
 
         // Клік — розблокування звуку + перемикання теми
         document.addEventListener('click', function(e) {
