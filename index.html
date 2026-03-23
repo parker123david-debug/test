@@ -5,23 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ВАРТА НА СТІНІ</title>
 
-    <style>
-        /* Підключення шрифту Optimus Princeps */
-        @font-face {
-            font-family: 'Optimus';
-            src: url('fonts/Optimus.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
+    <!-- Cinzel Decorative — найкращий аналог GoT з повною кирилицею uppercase -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
 
+    <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
             overflow: hidden;
-            font-family: 'Optimus', 'Georgia', serif;
+            font-family: 'Georgia', serif;
             color: white;
             transition: background-color 1.5s ease;
         }
@@ -82,14 +76,18 @@
         }
 
         .header {
+            font-family: 'Cinzel Decorative', Georgia, serif;
             color: #d4af37;
             font-size: clamp(2.2rem, 6vw, 4.5rem);
             font-weight: 900;
             text-shadow: 3px 3px 10px black;
             margin-top: 3vh;
+            text-transform: uppercase; /* усі літери великі, однакові */
+            letter-spacing: 2px;
         }
 
         .oath {
+            font-family: 'Optimus', 'Georgia', serif;
             color: #e0e0e0;
             font-size: clamp(1.8rem, 5.5vw, 4rem);
             line-height: 1.25;
@@ -139,13 +137,13 @@
     </div>
 
     <div class="container">
-        <div class="header">Нiч починається i починається моя варта...</div>
+        <div class="header">ніч починається, і починається моя варта...</div>
         <div class="oath">
-            Я — меч у темрявi.<br>
-            Я — вартовий на Стiнi.
+            Я — меч у темряві.<br>
+            Я — вартовий на Стіні.
         </div>
         <div class="bottom-block">
-            <div class="label">до кiнця варти</div>
+            <div class="label">до кінця варти</div>
             <div id="countdown" class="timer">00:00:00</div>
         </div>
     </div>
@@ -176,7 +174,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Аудіо розблокування
+        // Аудіо
         const ambience = document.getElementById('ambience');
         const theme = document.getElementById('theme');
         let unlocked = false;
@@ -189,7 +187,7 @@
             theme.play().catch(() => {});
         }
 
-        // Темна/денна тема
+        // Перемикання теми день/ніч
         const body = document.body;
         let isNight = localStorage.getItem('nightMode') === 'true';
 
@@ -203,15 +201,11 @@
             localStorage.setItem('nightMode', isNight);
         }
 
-        // Активуємо по першій взаємодії (розблокування звуку + перемикання на ніч)
-        // Подальші кліки — просто перемикання теми
+        // Клік — перемикання теми + розблокування звуку
         document.addEventListener('click', function(e) {
             unlockAudio();
-
-            // Якщо це перший клік — перемикаємо на ніч
-            // Якщо не перший — просто перемикаємо тему
             toggleTheme();
-        }, { once: false });  // НЕ once — щоб обробляти кожен клік
+        }, { passive: true });
 
         document.addEventListener('touchstart', function(e) {
             unlockAudio();
