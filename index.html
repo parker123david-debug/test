@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВАРТА НА СТІНІ</title>
+
+    <!-- Cinzel — стабільний аналог шрифту GoT -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Cinzel', Georgia, serif;
+            color: white;
+        }
+        .bg {
+            position: fixed;
+            inset: 0;
+            background: url('back.png') center center / cover no-repeat !important;
+            z-index: -1;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .header {
+            color: #d4af37;
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-weight: 900;
+            text-shadow: 3px 3px 10px black;
+            margin-top: 3vh;
+        }
+        .oath {
+            color: #e0e0e0;
+            font-size: clamp(1.8rem, 5.5vw, 4rem);
+            line-height: 1.25;
+            text-shadow: 2px 2px 12px black;
+        }
+        .bottom-block {
+            margin-bottom: 4vh;
+            width: 100%;
+        }
+        .label {
+            font-size: clamp(1.4rem, 4vw, 2.8rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+        }
+        .timer {
+            font-size: clamp(5rem, 16vw, 11rem);
+            color: #a5f2f3;
+            text-shadow: 0 0 40px rgba(165, 242, 243, 0.6);
+            line-height: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="container">
+        <div class="header">НІЧ ПОЧИНАЄТЬСЯ, І ПОЧИНАЄТЬСЯ МОЯ ВАРТА...</div>
+        <div class="oath">
+            Я — меч у темряві.<br>
+            Я — вартовий на Стіні.
+        </div>
+        <div class="bottom-block">
+            <div class="label">ДО КІНЦЯ ВАРТИ</div>
+            <div id="countdown" class="timer">00:00:00</div>
+        </div>
+    </div>
+
+    <audio id="ambience" loop muted volume="0.35">
+        <source src="wind.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="theme" loop muted volume="0.20">
+        <source src="title.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function updateTimer() {
+            const now = new Date();
+            let target = new Date();
+            target.setHours(8, 0, 0, 0);
+            if (now >= target) target.setDate(target.getDate() + 1);
+            const diff = target - now;
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('countdown').innerText =
+                (h < 10 ? "0" + h : h) + ":" +
+                (m < 10 ? "0" + m : m) + ":" +
+                (s < 10 ? "0" + s : s);
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        const ambience = document.getElementById('ambience');
+        const theme = document.getElementById('theme');
+
+        let unlocked = false;
+        function unlockAudio() {
+            if (unlocked) return;
+            unlocked = true;
+            ambience.muted = false;
+            theme.muted = false;
+            ambience.play().catch(() => {});
+            theme.play().catch(() => {});
+        }
+
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('touchstart', unlockAudio, { once: true });
+    </script>
+</body>
+</html>
