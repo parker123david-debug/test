@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ВАРТА НА СТІНІ</title>
-    <!-- Cinzel — стабільний аналог шрифту GoT -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
     <style>
         html, body {
@@ -15,6 +14,7 @@
             overflow: hidden;
             font-family: 'Cinzel', Georgia, serif;
             color: white;
+            background: #000; /* на випадок проблем з фоном */
         }
 
         .bg {
@@ -29,7 +29,7 @@
 
         .container {
             position: relative;
-            z-index: 2;           /* текст поверх снігу */
+            z-index: 3;           /* текст над усім */
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -74,63 +74,71 @@
             line-height: 0.9;
         }
 
-        /* ──────────────────────────────────────────────── */
-        /*                  СНІГ (25 сніжинок)             */
-        /* ──────────────────────────────────────────────── */
+        /* Сніг */
         .snow-container {
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 1;               /* між фоном і текстом */
-            overflow: hidden;
+            z-index: 2;               /* між фоном і текстом */
+            overflow: visible;        /* важливо! щоб сніг не обрізався зверху */
         }
 
         .snowflake {
             position: absolute;
-            top: -15px;
+            top: -20px;               /* починаємо трохи вище екрану */
             background: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 6px rgba(255,255,255,0.9);
-            opacity: 0.9;
-            animation: fall linear infinite, sway 8s ease-in-out infinite alternate;
+            box-shadow: 0 0 8px rgba(255,255,255,0.95);
+            opacity: 0.92;
+            animation: fall linear infinite;
+            will-change: transform;   /* оптимізація анімації */
         }
 
-        /* Розміщення, швидкість, розмір, затримка */
-        .snowflake:nth-child(1)  { left: 5%;   animation-duration: 18s, 6s; animation-delay: -1s;  width: 5px; height: 5px; }
-        .snowflake:nth-child(2)  { left: 10%;  animation-duration: 22s, 7s; animation-delay: -3s;  width: 7px; height: 7px; }
-        .snowflake:nth-child(3)  { left: 15%;  animation-duration: 14s, 5s; animation-delay: -5s;  width: 4px; height: 4px; }
-        .snowflake:nth-child(4)  { left: 20%;  animation-duration: 19s, 8s; animation-delay: -2s;  width: 6px; height: 6px; }
-        .snowflake:nth-child(5)  { left: 25%;  animation-duration: 16s, 6.5s;animation-delay: -7s;  width: 8px; height: 8px; }
-        .snowflake:nth-child(6)  { left: 30%;  animation-duration: 20s, 7.5s;animation-delay: -4s;  width: 5px; height: 5px; }
-        .snowflake:nth-child(7)  { left: 35%;  animation-duration: 13s, 4.8s;animation-delay: -9s;  width: 9px; height: 9px; }
-        .snowflake:nth-child(8)  { left: 40%;  animation-duration: 17s, 6s;  animation-delay: -6s;  width: 6px; height: 6px; }
-        .snowflake:nth-child(9)  { left: 45%;  animation-duration: 21s, 9s;  animation-delay: -1.5s; width: 7px; height: 7px; }
-        .snowflake:nth-child(10) { left: 50%;  animation-duration: 15s, 5.5s;animation-delay: -8s;  width: 5px; height: 5px; }
-        .snowflake:nth-child(11) { left: 55%;  animation-duration: 23s, 8s;  animation-delay: -3.5s; width: 8px; height: 8px; }
-        .snowflake:nth-child(12) { left: 60%;  animation-duration: 12s, 4.5s;animation-delay: -10s; width: 6px; height: 6px; }
-        .snowflake:nth-child(13) { left: 65%;  animation-duration: 18s, 7s;  animation-delay: -5.5s; width: 4px; height: 4px; }
-        .snowflake:nth-child(14) { left: 70%;  animation-duration: 16s, 6s;  animation-delay: -7.5s; width: 7px; height: 7px; }
-        .snowflake:nth-child(15) { left: 75%;  animation-duration: 19s, 7.8s;animation-delay: -2s;  width: 5px; height: 5px; }
-        .snowflake:nth-child(16) { left: 80%;  animation-duration: 14s, 5s;  animation-delay: -9.5s; width: 9px; height: 9px; }
-        .snowflake:nth-child(17) { left: 85%;  animation-duration: 20s, 8.5s;animation-delay: -4.5s; width: 6px; height: 6px; }
-        .snowflake:nth-child(18) { left: 90%;  animation-duration: 17s, 6.2s;animation-delay: -6s;  width: 5px; height: 5px; }
-        .snowflake:nth-child(19) { left: 92%;  animation-duration: 22s, 9s;  animation-delay: -1s;  width: 8px; height: 8px; }
-        .snowflake:nth-child(20) { left: 3%;   animation-duration: 15s, 5s;  animation-delay: -8s;  width: 7px; height: 7px; }
-        .snowflake:nth-child(21) { left: 28%;  animation-duration: 19s, 7s;  animation-delay: -3s;  width: 6px; height: 6px; }
-        .snowflake:nth-child(22) { left: 42%;  animation-duration: 13s, 4.5s;animation-delay: -10s; width: 5px; height: 5px; }
-        .snowflake:nth-child(23) { left: 57%;  animation-duration: 21s, 8s;  animation-delay: -5s;  width: 9px; height: 9px; }
-        .snowflake:nth-child(24) { left: 73%;  animation-duration: 16s, 6s;  animation-delay: -7s;  width: 4px; height: 4px; }
-        .snowflake:nth-child(25) { left: 88%;  animation-duration: 18s, 7s;  animation-delay: -2.5s; width: 7px; height: 7px; }
+        /* Більше різноманітності */
+        .snowflake:nth-child(odd)  { animation-duration: 18s; }
+        .snowflake:nth-child(even) { animation-duration: 24s; }
+
+        .snowflake:nth-child(3n)   { animation-duration: 15s; width: 4px; height: 4px; opacity: 0.7; }
+        .snowflake:nth-child(5n)   { animation-duration: 20s; width: 8px; height: 8px; opacity: 0.95; }
+        .snowflake:nth-child(7n)   { animation-duration: 22s; width: 6px; height: 6px; opacity: 0.85; }
+
+        /* Позиції */
+        .snowflake:nth-child(1)  { left: 8%;  animation-delay: -2s; }
+        .snowflake:nth-child(2)  { left: 14%; animation-delay: -5s; }
+        .snowflake:nth-child(3)  { left: 22%; animation-delay: -8s; }
+        .snowflake:nth-child(4)  { left: 29%; animation-delay: -1s; }
+        .snowflake:nth-child(5)  { left: 35%; animation-delay: -4s; width: 7px; height: 7px; }
+        .snowflake:nth-child(6)  { left: 41%; animation-delay: -7s; }
+        .snowflake:nth-child(7)  { left: 48%; animation-delay: -10s; width: 5px; height: 5px; }
+        .snowflake:nth-child(8)  { left: 54%; animation-delay: -3s; }
+        .snowflake:nth-child(9)  { left: 61%; animation-delay: -6s; width: 9px; height: 9px; }
+        .snowflake:nth-child(10) { left: 67%; animation-delay: -9s; }
+        .snowflake:nth-child(11) { left: 74%; animation-delay: -12s; }
+        .snowflake:nth-child(12) { left: 81%; animation-delay: -0.5s; width: 6px; height: 6px; }
+        .snowflake:nth-child(13) { left: 87%; animation-delay: -2.5s; }
+        .snowflake:nth-child(14) { left: 93%; animation-delay: -5.5s; }
+        .snowflake:nth-child(15) { left: 4%;  animation-delay: -7.5s; width: 8px; height: 8px; }
+        .snowflake:nth-child(16) { left: 11%; animation-delay: -10.5s; }
+        .snowflake:nth-child(17) { left: 19%; animation-delay: -13s; }
+        .snowflake:nth-child(18) { left: 26%; animation-delay: -1.5s; width: 5px; height: 5px; }
+        .snowflake:nth-child(19) { left: 33%; animation-delay: -4.5s; }
+        .snowflake:nth-child(20) { left: 40%; animation-delay: -7.5s; }
+        .snowflake:nth-child(21) { left: 47%; animation-delay: -10.5s; width: 7px; height: 7px; }
+        .snowflake:nth-child(22) { left: 53%; animation-delay: -13.5s; }
+        .snowflake:nth-child(23) { left: 60%; animation-delay: -16s; }
+        .snowflake:nth-child(24) { left: 68%; animation-delay: -2s; width: 6px; height: 6px; }
+        .snowflake:nth-child(25) { left: 76%; animation-delay: -5s; }
 
         @keyframes fall {
-            0%   { transform: translateY(-15vh) rotate(0deg); }
-            100% { transform: translateY(115vh) rotate(720deg); }
+            0%   { transform: translateY(-20vh) translateX(0) rotate(0deg); }
+            100% { transform: translateY(120vh) translateX(var(--sway, 30px)) rotate(1080deg); }
         }
 
-        @keyframes sway {
-            0%   { transform: translateX(-25px) rotate(-20deg); }
-            100% { transform: translateX(25px)  rotate(20deg); }
-        }
+        /* Додаємо випадкове хитання через CSS змінну */
+        .snowflake:nth-child(odd)  { --sway: 40px; }
+        .snowflake:nth-child(even) { --sway: -35px; }
+        .snowflake:nth-child(3n)   { --sway: 25px; }
+        .snowflake:nth-child(4n)   { --sway: -45px; }
     </style>
 </head>
 <body>
