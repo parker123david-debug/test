@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ВАРТА НА СТІНІ</title>
 
-    <!-- Cinzel Decorative — найкращий аналог GoT з повною кирилицею uppercase -->
+    <!-- Cinzel Decorative для однакових великих літер у заголовку -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
+        @font-face {
+            font-family: 'Optimus';
+            src: url('fonts/Optimus.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         html, body {
             margin: 0;
             padding: 0;
@@ -35,8 +43,8 @@
         .bg {
             position: absolute;
             inset: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
             object-position: center;
             transition: opacity 1.8s ease;
@@ -82,12 +90,12 @@
             font-weight: 900;
             text-shadow: 3px 3px 10px black;
             margin-top: 3vh;
-            text-transform: uppercase; /* усі літери великі, однакові */
+            text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .oath {
-            font-family: 'Optimus', 'Georgia', serif;
+            font-family: 'Optimus', Georgia, serif;
             color: #e0e0e0;
             font-size: clamp(1.8rem, 5.5vw, 4rem);
             line-height: 1.25;
@@ -174,7 +182,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Аудіо
+        // Аудіо розблокування
         const ambience = document.getElementById('ambience');
         const theme = document.getElementById('theme');
         let unlocked = false;
@@ -187,7 +195,7 @@
             theme.play().catch(() => {});
         }
 
-        // Перемикання теми день/ніч
+        // Перемикання теми
         const body = document.body;
         let isNight = localStorage.getItem('nightMode') === 'true';
 
@@ -201,7 +209,7 @@
             localStorage.setItem('nightMode', isNight);
         }
 
-        // Клік — перемикання теми + розблокування звуку
+        // Клік — розблокування звуку + перемикання теми
         document.addEventListener('click', function(e) {
             unlockAudio();
             toggleTheme();
@@ -210,7 +218,7 @@
         document.addEventListener('touchstart', function(e) {
             unlockAudio();
             toggleTheme();
-        }, { once: false, passive: true });
+        }, { passive: true });
     </script>
 </body>
 </html>
