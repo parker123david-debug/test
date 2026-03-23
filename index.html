@@ -9,8 +9,7 @@
         /* Підключення шрифту Optimus Princeps */
         @font-face {
             font-family: 'Optimus';
-            src: url('fonts/Optimus.ttf') format('truetype'),
-                 url('fonts/Optimus.woff') format('woff');
+            src: url('fonts/Optimus.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -24,6 +23,11 @@
             overflow: hidden;
             font-family: 'Optimus', 'Georgia', serif;
             color: white;
+            transition: background-color 1.5s ease; /* плавний перехід фону */
+        }
+
+        body.night {
+            background-color: #0a0a1f; /* темний фон на випадок затримки зображення */
         }
 
         .bg {
@@ -34,6 +38,20 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
+            transition: opacity 1.8s ease; /* плавне зникнення старого фону */
+            opacity: 1;
+        }
+
+        body.night .bg-day {
+            opacity: 0;
+        }
+
+        body.night .bg-night {
+            opacity: 1;
+        }
+
+        .bg-night {
+            opacity: 0; /* спочатку приховані нічні фони */
         }
 
         .container {
@@ -46,11 +64,15 @@
             align-items: center;
             text-align: center;
             padding: 20px 0;
+            transition: color 1.5s ease, text-shadow 1.5s ease;
+        }
+
+        body.night .container {
+            color: #e0e0ff; /* легкий блакитний відтінок уночі */
         }
 
         .header {
             color: #d4af37;
-            font-family: 'Optimus', 'Georgia', serif;
             font-size: clamp(2.2rem, 6vw, 4.5rem);
             font-weight: 900;
             text-shadow: 3px 3px 10px black;
@@ -59,7 +81,6 @@
 
         .oath {
             color: #e0e0e0;
-            font-family: 'Optimus', 'Georgia', serif;
             font-size: clamp(1.8rem, 5.5vw, 4rem);
             line-height: 1.25;
             text-shadow: 2px 2px 12px black;
@@ -84,13 +105,25 @@
             text-shadow: 0 0 40px rgba(165, 242, 243, 0.6);
             line-height: 0.9;
         }
+
+        body.night .timer {
+            color: #80d4ff; /* більш "нічний" блакитний */
+            text-shadow: 0 0 50px rgba(128, 212, 255, 0.8);
+        }
     </style>
 </head>
 <body>
 
-    <picture>
+    <!-- Денні фони -->
+    <picture class="bg bg-day">
       <source media="(min-width: 901px)" srcset="backg.png">
-      <img class="bg" src="back.png" alt="" loading="eager">
+      <img src="back.png" alt="" loading="eager">
+    </picture>
+
+    <!-- Нічні фони (спочатку приховані) -->
+    <picture class="bg bg-night">
+      <source media="(min-width: 901px)" srcset="backnight.png">
+      <img src="backgnight.png" alt="" loading="eager">
     </picture>
 
     <div class="container">
@@ -113,6 +146,7 @@
     </audio>
 
     <script>
+        // Таймер
         function updateTimer() {
             const now = new Date();
             let target = new Date();
@@ -130,6 +164,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
+        // Аудіо розблокування
         const ambience = document.getElementById('ambience');
         const theme = document.getElementById('theme');
         let unlocked = false;
@@ -141,8 +176,36 @@
             ambience.play().catch(() => {});
             theme.play().catch(() => {});
         }
-        document.addEventListener('click', unlockAudio, { once: true });
-        document.addEventListener('touchstart', unlockAudio, { once: true });
+
+        // Темна тема
+        const body = document.body;
+        const isNight = localStorage.getItem('nightMode') === 'true';
+
+        if (isNight) {
+            body.classList.add('night');
+        }
+
+        function activateNightMode() {
+            if (!body.classList.contains('night')) {
+                body.classList.add('night');
+                localStorage.setItem('nightMode', 'true');
+            }
+        }
+
+        // Активуємо по кліку або скролу
+        let activated = false;
+        function handleInteraction() {
+            if (activated) return;
+            activated = true;
+            unlockAudio();       // розблоковуємо звук
+            activateNightMode(); // перемикаємо на ніч
+        }
+
+        document.addEventListener('click', handleInteraction, { once: true });
+        document.addEventListener('touchstart', handleInteraction, { once: true });
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) handleInteraction();
+        }, { once: true, passive: true });
     </script>
 </body>
 </html>
